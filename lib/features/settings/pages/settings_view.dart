@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../../config/constants/application_theme_manager.dart';
+import '../../../core/config/application_theme_manager.dart';
 import '../../settings_provider.dart';
 
 class SettingsView extends StatelessWidget {
