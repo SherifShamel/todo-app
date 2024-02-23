@@ -7,8 +7,7 @@ import '../../../config/constants/application_theme_manager.dart';
 import '../../settings_provider.dart';
 
 class SettingsView extends StatelessWidget {
-   SettingsView({super.key});
-
+  SettingsView({super.key});
 
   final List<String> languageList = ["عربي", "English"];
   final List<String> themeList = ["Light", "Dark"];
@@ -55,7 +54,7 @@ class SettingsView extends StatelessWidget {
               ),
               closedFillColor: vm.isDark() ? theme.primaryColor : Colors.white,
               expandedFillColor:
-              vm.isDark() ? theme.primaryColor : Colors.white,
+                  vm.isDark() ? theme.primaryColor : Colors.white,
             ),
             onChanged: (value) async {
               if (value == "English") {
@@ -97,14 +96,14 @@ class SettingsView extends StatelessWidget {
                       : Colors.black,
                 ),
                 closedFillColor:
-                vm.isDark() ? theme.primaryColor : Colors.white,
+                    vm.isDark() ? theme.primaryColor : Colors.white,
                 expandedFillColor:
-                vm.isDark() ? theme.primaryColor : Colors.white),
-            onChanged: (value) {
+                    vm.isDark() ? theme.primaryColor : Colors.white),
+            onChanged: (value) async {
               if (value == "Light") {
-                vm.changeTheme(ThemeMode.light);
+                await vm.changeTheme(ThemeMode.light);
               } else if (value == "Dark") {
-                vm.changeTheme(ThemeMode.dark);
+                await vm.changeTheme(ThemeMode.dark);
               }
             },
           ),

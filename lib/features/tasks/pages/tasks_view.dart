@@ -49,6 +49,7 @@ class _TasksViewState extends State<TasksView> {
                 },
                 timeLineProps: const EasyTimeLineProps(separatorPadding: 15.0),
                 showTimelineHeader: false,
+                locale: vm.currentLanguage=="en" ? "en" : "ar",
                 dayProps: EasyDayProps(
                   height: 100,
                   activeDayStyle: DayStyle(

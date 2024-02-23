@@ -6,7 +6,12 @@ import 'package:todo_app/features/settings_provider.dart';
 import 'package:todo_app/features/splash/pages/splash_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  var provider = SettingsProvider();
+  await provider.loadSettings();
+
   runApp(
     ChangeNotifierProvider(
       create: (context) => SettingsProvider(),
@@ -24,6 +29,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
+      locale: Locale(vm.currentLanguage),
       title: 'todo_app',
       debugShowCheckedModeBanner: false,
       themeMode: vm.currentTheme,
