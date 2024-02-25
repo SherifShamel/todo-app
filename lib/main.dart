@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:todo_app/features/register/pages/register_view.dart';
 
 import 'core/config/application_theme_manager.dart';
 import 'features/layout_view.dart';
@@ -41,7 +42,8 @@ class MyApp extends StatelessWidget {
       routes: {
         SplashView.routeName: (context) => const SplashView(),
         LayoutView.routeName: (context) => const LayoutView(),
-        LoginView.routeName: (context) => const LoginView(),
+        LoginView.routeName: (context) => LoginView(),
+        RegisterView.routeName: (context) => RegisterView(),
       },
     );
   }
