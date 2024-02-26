@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/features/firebaseUtils.dart';
+import 'package:todo_app/features/login/pages/login_view.dart';
 
 import '../../../core/widgets/custom_text_field.dart';
 import '../../../generated/assets.dart';
@@ -33,7 +36,7 @@ class RegisterView extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          toolbarHeight: mediaQuery.height*0.2,
+          toolbarHeight: mediaQuery.height * 0.2,
           backgroundColor: Colors.transparent,
           elevation: 0,
           title: Text(
@@ -53,7 +56,9 @@ class RegisterView extends StatelessWidget {
                   child: ListView(
                     physics: const ClampingScrollPhysics(),
                     children: [
-                      SizedBox(height: mediaQuery.height*0.13,),
+                      SizedBox(
+                        height: mediaQuery.height * 0.13,
+                      ),
                       Text(
                         "Full Name",
                         style: theme.textTheme.bodySmall,
@@ -143,7 +148,19 @@ class RegisterView extends StatelessWidget {
                                 MaterialStatePropertyAll(theme.primaryColor)),
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            print("Validate is done");
+                            FirebaseUtils()
+                                .createUserWithEmailAndPassword(
+                                    emailController.text,
+                                    passwordController.text)
+                                .then((value) {
+                              if (value == true) {
+                                EasyLoading.dismiss();
+                                Navigator.pushReplacementNamed(
+                                  context,
+                                  LoginView.routeName,
+                                );
+                              }
+                            });
                           }
                         },
                         child: Row(

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/features/layout_view.dart';
 import 'package:todo_app/features/login/pages/login_view.dart';
+import 'package:todo_app/features/tasks/pages/tasks_view.dart';
 
 import '../../settings_provider.dart';
 

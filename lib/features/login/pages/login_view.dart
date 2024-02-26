@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/core/widgets/custom_text_field.dart';
+import 'package:todo_app/features/firebaseUtils.dart';
+import 'package:todo_app/features/layout_view.dart';
 import 'package:todo_app/features/register/pages/register_view.dart';
 import 'package:todo_app/features/settings_provider.dart';
+import 'package:todo_app/features/tasks/pages/tasks_view.dart';
 import 'package:todo_app/generated/assets.dart';
 
 class LoginView extends StatelessWidget {
   LoginView({super.key});
 
-  var _formKey= GlobalKey<FormState>();
+  var _formKey = GlobalKey<FormState>();
   static const String routeName = "loginView";
 
   @override
@@ -76,7 +80,6 @@ class LoginView extends StatelessWidget {
                         hint: "Enter your Email.",
                         keyboardType: TextInputType.emailAddress,
                         hintColor: Colors.grey.shade700,
-
                       ),
                       SizedBox(height: mediaQuery.height * 0.03),
                       Text(
@@ -103,7 +106,18 @@ class LoginView extends StatelessWidget {
                                 MaterialStatePropertyAll(theme.primaryColor)),
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            print("Login is Done");
+                            FirebaseUtils()
+                                .signInWithEmailAndPassword(
+                              emailController.text,
+                              passwordController.text,
+                            )
+                                .then((value) {
+                              if (value == true) {
+                                EasyLoading.dismiss();
+                                Navigator.pushReplacementNamed(
+                                    context, LayoutView.routeName);
+                              }
+                            });
                           }
                         },
                         child: Row(
