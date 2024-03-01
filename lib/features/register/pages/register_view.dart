@@ -1,27 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/core/widgets/custom_text_field.dart';
 import 'package:todo_app/features/firebaseUtils.dart';
-import 'package:todo_app/features/layout_view.dart';
-import 'package:todo_app/features/register/pages/register_view.dart';
-import 'package:todo_app/features/settings_provider.dart';
-import 'package:todo_app/features/tasks/pages/tasks_view.dart';
-import 'package:todo_app/generated/assets.dart';
+import 'package:todo_app/features/login/pages/login_view.dart';
 
-class LoginView extends StatelessWidget {
-  LoginView({super.key});
+import '../../../core/widgets/custom_text_field.dart';
+import '../../../generated/assets.dart';
+import '../../settings_provider.dart';
 
+class RegisterView extends StatelessWidget {
+  RegisterView({super.key});
+
+  static const String routeName = 'registerView';
   var _formKey = GlobalKey<FormState>();
-  static const String routeName = "loginView";
 
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context).size;
     var theme = Theme.of(context);
     var vm = Provider.of<SettingsProvider>(context);
+    var fullNameController = TextEditingController();
     var emailController = TextEditingController();
     var passwordController = TextEditingController();
+    var testController = TextEditingController();
+    var confirmPasswordController = TextEditingController();
+
     return Container(
       decoration: BoxDecoration(
         color: vm.currentTheme == ThemeMode.dark
@@ -31,6 +34,16 @@ class LoginView extends StatelessWidget {
             image: AssetImage(Assets.imgPattern), fit: BoxFit.cover),
       ),
       child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          toolbarHeight: mediaQuery.height * 0.2,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          title: Text(
+            "Register",
+            style: theme.textTheme.titleLarge,
+          ),
+        ),
         backgroundColor: Colors.transparent,
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -43,22 +56,26 @@ class LoginView extends StatelessWidget {
                   child: ListView(
                     physics: const ClampingScrollPhysics(),
                     children: [
-                      SizedBox(height: mediaQuery.height * 0.1),
-                      Text(
-                        "Login",
-                        textAlign: TextAlign.center,
-                        style: theme.textTheme.titleLarge,
+                      SizedBox(
+                        height: mediaQuery.height * 0.13,
                       ),
-                      SizedBox(height: mediaQuery.height * 0.2),
                       Text(
-                        "Welcome Back",
-                        textAlign: TextAlign.start,
-                        style: theme.textTheme.bodyLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
-                        ),
+                        "Full Name",
+                        style: theme.textTheme.bodySmall,
                       ),
-                      const SizedBox(height: 40),
+                      CustomTextField(
+                        controller: fullNameController,
+                        onValidate: (value) {
+                          if (value!.trim().isEmpty || value == null) {
+                            return "Enter your name please";
+                          }
+                        },
+                        suffixWidget: const Icon(Icons.person),
+                        hint: "Enter your Full Name.",
+                        keyboardType: TextInputType.text,
+                        hintColor: Colors.grey.shade700,
+                      ),
+                      SizedBox(height: mediaQuery.height * 0.03),
                       Text(
                         "Email",
                         style: theme.textTheme.bodySmall,
@@ -89,15 +106,40 @@ class LoginView extends StatelessWidget {
                       CustomTextField(
                         controller: passwordController,
                         onValidate: (value) {
+                          var regex = RegExp(
+                              r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
                           if (value!.trim().isEmpty || value == null) {
-                            return "Enter your Password please";
+                            return "Enter a password please";
                           }
-                          return null;
+                          if (!regex.hasMatch(value)) {
+                            return "password should contain at least one upper case \n at least one lower case \n at least one digit \n at least one Special character \n Must be at least 8 characters in length";
+                          }
                         },
                         keyboardType: TextInputType.visiblePassword,
                         isPassword: true,
                         maxLines: 1,
                         hint: "Enter your Password.",
+                      ),
+                      SizedBox(height: mediaQuery.height * 0.05),
+                      Text(
+                        "Confirm Password",
+                        style: theme.textTheme.bodySmall,
+                      ),
+                      CustomTextField(
+                        controller: confirmPasswordController,
+                        onValidate: (value) {
+                          if (value!.trim().isEmpty || value == null) {
+                            return "Enter a password please";
+                          }
+
+                          if (value != passwordController.text) {
+                            return "Password doesn't match";
+                          }
+                        },
+                        keyboardType: TextInputType.visiblePassword,
+                        isPassword: true,
+                        maxLines: 1,
+                        hint: "Confirm your Password.",
                       ),
                       SizedBox(height: mediaQuery.height * 0.05),
                       ElevatedButton(
@@ -107,15 +149,16 @@ class LoginView extends StatelessWidget {
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             FirebaseUtils()
-                                .signInWithEmailAndPassword(
-                              emailController.text,
-                              passwordController.text,
-                            )
+                                .createUserWithEmailAndPassword(
+                                    emailController.text,
+                                    passwordController.text)
                                 .then((value) {
                               if (value == true) {
                                 EasyLoading.dismiss();
                                 Navigator.pushReplacementNamed(
-                                    context, LayoutView.routeName);
+                                  context,
+                                  LoginView.routeName,
+                                );
                               }
                             });
                           }
@@ -123,22 +166,10 @@ class LoginView extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Login", style: theme.textTheme.bodyMedium),
+                            Text("Register", style: theme.textTheme.bodyMedium),
                             const Icon(Icons.chevron_right)
                           ],
                         ),
-                      ),
-                      Text(
-                        "OR",
-                        style: theme.textTheme.bodySmall,
-                        textAlign: TextAlign.center,
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, RegisterView.routeName);
-                        },
-                        child: Text("Create New Account !",
-                            style: theme.textTheme.bodyMedium),
                       ),
                     ],
                   ),

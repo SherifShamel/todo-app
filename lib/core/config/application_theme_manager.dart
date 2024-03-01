@@ -9,7 +9,7 @@ class ApplicationThemeManager {
       backgroundColor: primaryColor,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(50),
-          side: BorderSide(
+          side: const BorderSide(
             color: Color(0xffDFECDB),
             width: 4,
           )),
@@ -28,10 +28,42 @@ class ApplicationThemeManager {
       // unselectedItemColor: Colors.grey,
       unselectedIconTheme: IconThemeData(color: Colors.grey, size: 28),
     ),
-    bottomAppBarTheme: BottomAppBarTheme(
+    bottomAppBarTheme: const BottomAppBarTheme(
       color: Colors.white,
       padding: EdgeInsets.zero,
-    )
+    ),
+    textTheme: const TextTheme(
+      titleLarge: TextStyle(
+        fontFamily: "Poppins",
+        fontSize: 22,
+        fontWeight: FontWeight.bold,
+        color: Colors.white,
+      ),
+      bodyLarge: TextStyle(
+        fontFamily: "Poppins",
+        fontSize: 20,
+        fontWeight: FontWeight.w400,
+        color: Colors.black,
+      ),
+      bodyMedium: TextStyle(
+        fontFamily: "Poppins",
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+        color: Colors.black,
+      ),
+      bodySmall: TextStyle(
+        fontFamily: "Poppins",
+        fontSize: 14,
+        fontWeight: FontWeight.normal,
+        color: Colors.black,
+      ),
+      displayLarge: TextStyle(
+        fontFamily: "Poppins",
+        fontSize: 15,
+        fontWeight: FontWeight.bold,
+        color: Colors.black,
+      ),
+    ),
   );
 
   static ThemeData darkTheme = ThemeData(
@@ -55,14 +87,46 @@ class ApplicationThemeManager {
       backgroundColor: primaryColor,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(50),
-          side: BorderSide(
+          side: const BorderSide(
             color: Color(0xFF141922),
             width: 4,
           )),
     ),
-      bottomAppBarTheme: BottomAppBarTheme(
-        color: Color(0xFF141922),
-        padding: EdgeInsets.zero,
-      )
+    bottomAppBarTheme: const BottomAppBarTheme(
+      color: Color(0xFF141922),
+      padding: EdgeInsets.zero,
+    ),
+    textTheme: const TextTheme(
+      titleLarge: TextStyle(
+        fontFamily: "Poppins",
+        fontSize: 22,
+        fontWeight: FontWeight.bold,
+        color: Color(0xFF060E1E),
+      ),
+      bodyLarge: TextStyle(
+        fontFamily: "Poppins",
+        fontSize: 20,
+        fontWeight: FontWeight.w400,
+        color: Colors.black,
+      ),
+      bodyMedium: TextStyle(
+        fontFamily: "Poppins",
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+        color: Colors.black,
+      ),
+      bodySmall: TextStyle(
+        fontFamily: "Poppins",
+        fontSize: 14,
+        fontWeight: FontWeight.bold,
+        color: Colors.black,
+      ),
+      displayLarge: TextStyle(
+        fontFamily: "Poppins",
+        fontSize: 15,
+        fontWeight: FontWeight.bold,
+        color: Colors.black,
+      ),
+    ),
   );
 }

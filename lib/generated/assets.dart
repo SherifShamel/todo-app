@@ -6,6 +6,7 @@ class Assets {
   static const String fontsPoppinsMedium = 'assets/fonts/Poppins-Medium.ttf';
   static const String fontsPoppinsRegular = 'assets/fonts/Poppins-Regular.ttf';
   static const String fontsPoppinsSemiBold = 'assets/fonts/Poppins-SemiBold.ttf';
+  static const String imgPattern = 'assets/img/pattern.png';
   static const String imgSplashBackground = 'assets/img/splash_background.png';
   static const String imgSplashDarkBackground = 'assets/img/splash_dark_background.png';
 
