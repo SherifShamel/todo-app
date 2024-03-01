@@ -12,22 +12,22 @@ class FirebaseUtils {
         email: emailAddress,
         password: password,
       );
-      print(credential.user?.email);
+      // print(credential.user?.email);
       SnackBarService().showSuccessMsg("Register Success");
       return Future.value(true);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+        // print('The password provided is too weak.');
         SnackBarService().showSuccessMsg(e.code);
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        // print('The account already exists for that email.');
         SnackBarService()
             .showSuccessMsg(e.code);
       }
       EasyLoading.dismiss();
       return Future.value(false);
     } catch (e) {
-      print(e);
+      // print(e);
       EasyLoading.dismiss();
       return Future.value(false);
     }
@@ -43,11 +43,11 @@ class FirebaseUtils {
       return Future.value(true);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+        // print('No user found for that email.');
 
         return Future.value(false);
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+        // print('Wrong password provided for that user.');
 
         return Future.value(false);
       }
